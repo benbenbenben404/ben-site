@@ -49,15 +49,17 @@
             constructor(pos, vel, mass, color) {
                 this.pos = pos
                 this.prev_pos = pos
+                this.next_pos = pos
                 this.vel = vel
                 this.mass = mass
                 this.color = color
                 this.id = getRandomInt(300000000)
                 this.ctx = document.getElementById("myCanvas").getContext("2d");
             }
-            tick(bodies) {
+            tick1(bodies) {
                 var force = new Vector2(0, 0)
                 this.prev_pos = this.pos
+                var body
                 for (body of bodies) {
 
                     if (body.id == this.id) {
@@ -67,24 +69,26 @@
                     //console.log(distance_squared)
 
                     var dir = this.pos.subtract(body.pos).normalised()
-                    var force_strength =- G * body.mass / distance_squared
+                    var force_strength = - G * body.mass / distance_squared
                     force = force.add(new Vector2(dir.x * force_strength, dir.y * force_strength))
                     //console.log(force)
                 }
                 this.vel = this.vel.add(force)
-                this.pos = this.pos.add(this.vel)
+                this.next_pos = this.pos.add(this.vel)
                 this.draw()
                 //console.log(this.pos.x,this.pos.y)
             }
-
+            tick2(bodies) {
+                this.pos = this.next_pos                //console.log(this.pos.x,this.pos.y)
+            }
             draw() {
-
-                 this.ctx.beginPath();
+                this.ctx.lineWidth = 4;
+                this.ctx.beginPath();
 
                 this.ctx.moveTo(canvas_to_pixel(this.prev_pos).x, canvas_to_pixel(this.prev_pos).y)
                 this.ctx.strokeStyle = this.color
 
-                this.ctx.lineTo(canvas_to_pixel(this.pos).x, canvas_to_pixel(this.pos).y);
+                this.ctx.lineTo(canvas_to_pixel(this.next_pos).x, canvas_to_pixel(this.next_pos).y);
                 this.ctx.stroke();
             }
         }
@@ -113,25 +117,44 @@
         bodies.push(new Body(new Vector2(-125.000436*4, 24.308753*4), new Vector2(0.4662036850, -0.5923657300), 0.1, "rgb(122, 122, 122)"))
 
         //3 bodies
-        bodies.push(new Body(new Vector2(-97.000436*4, 24.308753*4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 255, 0)"))
+        bodies.push(new Body(new Vector2(-97.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 255, 0)"))
         bodies.push(new Body(new Vector2(0, 0), new Vector2(-0.93240737, -0.86473146), 10, "rgb(255,0 , 0)"))
-        bodies.push(new Body(new Vector2(97.000436*4, -24.308753*4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 0, 255)"))
-         var G = 40
+        bodies.push(new Body(new Vector2(97.000436 * 4, -24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 0, 255)"))
+        var G = 40
 
         //solar system
-/*         bodies.push(new Body(new Vector2(0, 0), new Vector2(0, 0), 10000, "rgb(255,0 , 0)"))
-        bodies.push(new Body(new Vector2(200, 200), new Vector2(3, -3), 100, "rgb(0, 0, 255)"))
-       bodies.push(new Body(new Vector2(150, 210), new Vector2(3, -4), 1, "rgb(122,122, 122)"))
-        var G = 0.5 */
+        /*         bodies.push(new Body(new Vector2(0, 0), new Vector2(0, 0), 10000, "rgb(255,0 , 0)"))
+                bodies.push(new Body(new Vector2(200, 200), new Vector2(3, -3), 100, "rgb(0, 0, 255)"))
+               bodies.push(new Body(new Vector2(150, 210), new Vector2(3, -4), 1, "rgb(122,122, 122)"))
+                var G = 0.5 */
 
         console.log(bodies)
+        var tick_counter=0
         setInterval(physicsTick, 0.1);
-
+        
         function physicsTick() {
-            for (body of bodies) {
+            tick_counter+=1
+            for (_body of bodies) {
 
-                body.tick(bodies)
+                _body.tick1(bodies)
+                console.log(_body)
                 //body.draw()
+
+            }
+            for (_body of bodies) {
+
+                //console.log(body)
+                _body.tick2(bodies)
+                //body.draw()
+                //ctx.globalAlpha = 0.001;       
+                ctx.fillStyle = "rgba(255, 255, 255, 0.005)";
+                ctx.fillRect(0, 0, screen_size.x, screen_size.y);
+                //ctx.globalAlpha = 1;       
+
+            }
+            if (tick_counter%100==1){
+                ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
+                ctx.fillRect(0, 0, screen_size.x, screen_size.y);
 
             }
 
