@@ -15,28 +15,40 @@
     <label for="num_of_bodies">Number Of Bodies:</label><br>
     <input onformchange="change_num_of_bodies()" type="number" id="num_of_bodies" name="num_of_bodies" value="3"><br>
     <div class="planets">
-        <div class="planet" id="plan1">
+        <form class="planet" id="plan1">
             <label for="plan1_x">Position X,Y:</label>
-            <input type="number" id="plan1_x" value="0">
-            <input type="number" id="plan1_y" value="0">
+            <input type="number" id="pos_x" value="0">
+            <input type="number" id="pos_y" value="0">
 
             <label for="plan1_vel_x">Velocity X,Y:</label>
-            <input type="number" id="plan1_vel_x" value="0">
-            <input type="number" id="plan1_vel_y" value="0">
+            <input type="number" id="vel_x" value="0">
+            <input type="number" id="vel_y" value="0">
 
             <label for="plan1_mass">Mass:</label>
-            <input type="number" id="plan1_mass" value="0">
-        </div>
+            <input type="number" id="mass" value="0">
+        </form>
     </div>
     <script>
         var num_of_bodies = 3
         var bodies_ar = ["plan1", "plan2", "plan3"]
         var planet_form =""
-            function change_num_of_bodies() {
-                if (getElementById("num_of_bodies").value > num_of_bodies) {
+        function change_num_of_bodies() {
+            if (getElementById("num_of_bodies").value > num_of_bodies) {
 
-                }
             }
+        }
+        bodies.push(new Body(new Vector2(-97.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 255, 0)"))
+        bodies.push(new Body(new Vector2(0, 0), new Vector2(-0.93240737, -0.86473146), 10, "rgb(255,0 , 0)"))
+        bodies.push(new Body(new Vector2(97.000436 * 4, -24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 0, 255)"))
+
+        function add_bodies_from_planets(){
+            for (_body of bodies_ar){
+                var planet_form = document.forms[_body]
+                bodies.push(new Body(new Vector2(planet_form["pos_x"].value,planet_form["pos_y"].value), new Vector2(planet_form["vel_x"].value, planet_form["vel_y"].value), planet_form["mass"].value, "rgb(0, 255, 0)"))
+
+            }
+
+        }
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
@@ -135,12 +147,12 @@
         //list of bodies
 
         //comment this out for pure 3 bodies
-        bodies.push(new Body(new Vector2(-125.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, -0.5923657300), 0.1, "rgb(122, 122, 122)"))
+        //bodies.push(new Body(new Vector2(-125.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, -0.5923657300), 0.1, "rgb(122, 122, 122)"))
 
         //3 bodies
-        bodies.push(new Body(new Vector2(-97.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 255, 0)"))
-        bodies.push(new Body(new Vector2(0, 0), new Vector2(-0.93240737, -0.86473146), 10, "rgb(255,0 , 0)"))
-        bodies.push(new Body(new Vector2(97.000436 * 4, -24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 0, 255)"))
+        //bodies.push(new Body(new Vector2(-97.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 255, 0)"))
+        //bodies.push(new Body(new Vector2(0, 0), new Vector2(-0.93240737, -0.86473146), 10, "rgb(255,0 , 0)"))
+        //bodies.push(new Body(new Vector2(97.000436 * 4, -24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 0, 255)"))
         var G = 40
 
         //solar system
