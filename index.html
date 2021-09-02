@@ -12,10 +12,24 @@
 <body onload="page_load()">
     <canvas id="myCanvas" width="200%" height="100" style="border:1px solid #d3d3d3;">
     </canvas>
-
     <label for="num_of_bodies">Number Of Bodies:</label><br>
-    <input type="number" id="num_of_bodies" name="num_of_bodies" value="3" oninput="console.log(self)"><br>
+    <input onformchange="change_num_of_bodies()" type="number" id="num_of_bodies" name="num_of_bodies" value="3"><br>
+    <div class="planets">
+        <div class="planet" id="plan1">
+            <input  onformchange="change_num_of_bodies()" type="number" id="num_of_bodies" name="num_of_bodies"
+                value="3"><br>
+
+        </div>
+    </div>
     <script>
+        var num_of_bodies = 3
+        var bodies_ar = ["plan1", "plan2", "plan3"]
+        var planet_form =
+            function change_num_of_bodies() {
+                if (getElementById("num_of_bodies").value > num_of_bodies) {
+
+                }
+            }
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
@@ -114,7 +128,7 @@
         //list of bodies
 
         //comment this out for pure 3 bodies
-        bodies.push(new Body(new Vector2(-125.000436*4, 24.308753*4), new Vector2(0.4662036850, -0.5923657300), 0.1, "rgb(122, 122, 122)"))
+        bodies.push(new Body(new Vector2(-125.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, -0.5923657300), 0.1, "rgb(122, 122, 122)"))
 
         //3 bodies
         bodies.push(new Body(new Vector2(-97.000436 * 4, 24.308753 * 4), new Vector2(0.4662036850, 0.4323657300), 10, "rgb(0, 255, 0)"))
@@ -129,11 +143,11 @@
                 var G = 0.5 */
 
         console.log(bodies)
-        var tick_counter=0
+        var tick_counter = 0
         setInterval(physicsTick, 0.1);
-        
+
         function physicsTick() {
-            tick_counter+=1
+            tick_counter += 1
             for (_body of bodies) {
 
                 _body.tick1(bodies)
@@ -152,7 +166,7 @@
                 //ctx.globalAlpha = 1;       
 
             }
-            if (tick_counter%100==1){
+            if (tick_counter % 100 == 1) {
                 ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
                 ctx.fillRect(0, 0, screen_size.x, screen_size.y);
 
