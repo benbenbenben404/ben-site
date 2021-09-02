@@ -16,15 +16,22 @@
     <input onformchange="change_num_of_bodies()" type="number" id="num_of_bodies" name="num_of_bodies" value="3"><br>
     <div class="planets">
         <div class="planet" id="plan1">
-            <input  onformchange="change_num_of_bodies()" type="number" id="num_of_bodies" name="num_of_bodies"
-                value="3"><br>
+            <label for="plan1_x">Position X,Y:</label>
+            <input type="number" id="plan1_x" value="0">
+            <input type="number" id="plan1_y" value="0">
 
+            <label for="plan1_vel_x">Velocity X,Y:</label>
+            <input type="number" id="plan1_vel_x" value="0">
+            <input type="number" id="plan1_vel_y" value="0">
+
+            <label for="plan1_mass">Mass:</label>
+            <input type="number" id="plan1_mass" value="0">
         </div>
     </div>
     <script>
         var num_of_bodies = 3
         var bodies_ar = ["plan1", "plan2", "plan3"]
-        var planet_form =
+        var planet_form =""
             function change_num_of_bodies() {
                 if (getElementById("num_of_bodies").value > num_of_bodies) {
 
