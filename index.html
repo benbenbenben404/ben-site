@@ -31,6 +31,7 @@
     <script>
         var num_of_bodies = 3
         var bodies_ar = ["plan1"]
+        var bodies = []
         var planet_form =""
         function change_num_of_bodies() {
             if (getElementById("num_of_bodies").value > num_of_bodies) {
@@ -143,7 +144,6 @@
         }
         var ctx = document.getElementById("myCanvas").getContext("2d");
 
-        var bodies = []
         console.log(new Vector2(100, 100))
 
         //list of bodies
